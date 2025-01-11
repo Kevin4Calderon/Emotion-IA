@@ -8,87 +8,177 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-    body {
-        font-family: 'Roboto', sans-serif;
-        background-color: #0d1117;
-        color: #e6edf3;
-        animation: fadeIn 1s ease-in-out;
-        overflow-x: hidden;
-        position: relative;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            animation: fadeIn 1s ease-in-out;
+            overflow-x: hidden;
+            position: relative;
         }
-        to {
-            opacity: 1;
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
-    }
 
-    .card {
-        background-color: #161b22;
-        border: 1px solid #30363d;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        max-width: 90%; /* Limita el ancho del contenedor */
-        margin: auto;
-        text-align: center;
-    }
+        .card {
+            background-color: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            margin: auto;
+            max-width: 90%;
+            text-align: center;
+            transition: transform 0.3s;
+        }
 
-    #results img {
-        max-width: 100%; /* La imagen nunca será más ancha que su contenedor */
-        max-height: 100%; /* La imagen nunca será más alta que su contenedor */
-        height: auto;    /* Mantén la proporción */
-        object-fit: contain; /* Asegura que la imagen se ajuste sin recortarse */
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+        .card:hover {
+            transform: scale(1.03);
+        }
 
-    .btn-custom {
-        background-color: #1f6feb;
-        color: white;
-        padding: 12px 24px;
-        border-radius: 8px;
-        border: none;
-        font-size: 16px;
-        font-weight: bold;
-        transition: background-color 0.3s, transform 0.2s;
-    }
+        #results img {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
 
-    .btn-custom:hover {
-        background-color: #1158c7;
-        transform: scale(1.05);
-    }
-</style>
+        .btn-custom {
+            background-color: #2196f3;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 8px;
+            border: none;
+            font-size: 18px;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-custom:hover {
+            background-color: #1976d2;
+            transform: scale(1.05);
+        }
+
+        .btn-custom:active {
+            background-color: #1565c0;
+            transform: scale(1);
+        }
+
+        .bubble {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: bubbleAnimation 8s infinite;
+        }
+
+        .bubble:nth-child(1) {
+            left: 20%;
+            animation-duration: 10s;
+            animation-delay: 2s;
+        }
+
+        .bubble:nth-child(2) {
+            left: 60%;
+            animation-duration: 6s;
+            animation-delay: 3s;
+        }
+
+        .bubble:nth-child(3) {
+            left: 40%;
+            animation-duration: 12s;
+            animation-delay: 5s;
+        }
+
+        .bubble:nth-child(4) {
+            left: 80%;
+            animation-duration: 9s;
+            animation-delay: 4s;
+        }
+
+        @keyframes bubbleAnimation {
+            0% {
+                transform: translateY(100vh);
+            }
+            100% {
+                transform: translateY(-100vh);
+            }
+        }
+
+        .progress-container {
+            background-color: #303030;
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress {
+            background-color: #4caf50;
+            height: 100%;
+            width: 0%;
+            border-radius: 6px;
+            transition: width 0.2s;
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #2196f3;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .error {
+            background-color: #e53935;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+    </style>
 </head>
 
 <body class="bg-custom min-h-screen">
-    <!-- Efecto de burbujas -->
     <div class="bubble"></div>
     <div class="bubble"></div>
     <div class="bubble"></div>
     <div class="bubble"></div>
 
     <div class="container mx-auto px-4 py-8">
-        <!-- Título principal -->
-        <div class="text-center animate-fade">
-            <h1 class="text-5xl font-extrabold tracking-tight">EmotionAI</h1>
-            <p class="text-lg font-light mt-2">¡Analiza emociones en tus imágenes de forma rápida y precisa!</p>
+        <div class="text-center">
+            <h1 class="text-6xl font-extrabold text-indigo-400 tracking-tight mb-2">EmotionAI</h1>
+            <p class="text-lg font-light mb-6">¡Analiza emociones en tus imágenes de forma rápida y precisa!</p>
             <div class="title-divider"></div>
         </div>
 
-        <!-- Contenedor principal -->
         <div class="max-w-4xl mx-auto mt-12">
             <div class="flex flex-wrap -mx-4">
-                <!-- Panel izquierdo -->
                 <div class="w-full md:w-1/2 px-4 mb-8">
                     <div class="card">
-                        <h2 class="text-2xl font-semibold mb-6">Sube tu imagen para analizar emociones</h2>
+                        <h2 class="text-2xl font-semibold mb-6 text-gray-300">Sube tu imagen para analizar emociones</h2>
                         <form id="uploadForm" class="space-y-6">
                             <div class="flex items-center justify-center w-full">
-                                <label class="flex flex-col items-center justify-center w-full h-48 border-4 border-dashed border-gray-600 cursor-pointer">
+                                <label class="flex flex-col items-center justify-center w-full h-48 border-4 border-dashed border-gray-500 cursor-pointer rounded-lg">
                                     <div class="text-center text-gray-400" id="previewContainer">
                                         <p>Arrastra o selecciona una imagen</p>
                                     </div>
@@ -103,37 +193,35 @@
                             Imagen subida correctamente.
                         </div>
                         <div id="progressSection" class="hidden mt-6">
-                            <h2 class="text-xl font-semibold mb-4">Progreso del Análisis</h2>
+                            <h2 class="text-xl font-semibold mb-4 text-gray-300">Progreso del Análisis</h2>
                             <div class="progress-container">
                                 <div id="progress" class="progress"></div>
                             </div>
                         </div>
                         <div id="loading" class="hidden mt-6">
                             <div class="flex items-center justify-center">
-                                <div class="loading-spinner h-14 w-14"></div>
+                                <div class="loading-spinner"></div>
                             </div>
                         </div>
-                        <div id="error" class="hidden mt-6 p-4 bg-red-800 border border-red-600 text-red-200 rounded-lg">
-                        </div>
+                        <div id="error" class="error hidden mt-6"></div>
                     </div>
                 </div>
 
-                <!-- Panel derecho -->
                 <div class="w-full md:w-1/2 px-4">
                     <div class="card">
-                        <h2 class="text-2xl font-semibold mb-6">Resultados de la Detección</h2>
+                        <h2 class="text-2xl font-semibold mb-6 text-gray-300">Resultados de la Detección</h2>
                         <div id="detectionComplete" class="hidden text-green-500 font-bold">
                             Detección Completa
                         </div>
                         <div id="results" class="hidden">
                             <div class="border border-gray-600 rounded-lg p-6">
-                                <h4 class="font-semibold mb-4">Resultados:</h4>
+                                <h4 class="font-semibold mb-4 text-gray-200">Resultados:</h4>
                                 <div class="relative">
                                     <img id="keypointImage" class="max-w-full h-auto mx-auto" src="" alt="Puntos clave del rostro">
                                     <img id="resultImageSecondary" class="max-w-full h-auto mx-auto mt-4" src="" alt="Transformaciones de la Imagen">
                                 </div>
                             </div>
-                            <div id="emotionLabel" class="text-lg font-bold text-center mt-4 hidden"></div>
+                            <div id="emotionLabel" class="text-lg font-bold text-center mt-4 text-gray-200 hidden"></div>
                         </div>
                     </div>
                 </div>
