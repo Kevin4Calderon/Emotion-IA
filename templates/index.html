@@ -26,6 +26,26 @@
         }
     }
 
+    .card {
+        background-color: #161b22;
+        border: 1px solid #30363d;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        max-width: 90%; /* Limita el ancho del contenedor */
+        margin: auto;
+        text-align: center;
+    }
+
+    #results img {
+        max-width: 100%; /* La imagen nunca será más ancha que su contenedor */
+        max-height: 100%; /* La imagen nunca será más alta que su contenedor */
+        height: auto;    /* Mantén la proporción */
+        object-fit: contain; /* Asegura que la imagen se ajuste sin recortarse */
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
     .btn-custom {
         background-color: #1f6feb;
         color: white;
@@ -40,22 +60,6 @@
     .btn-custom:hover {
         background-color: #1158c7;
         transform: scale(1.05);
-    }
-
-    .card {
-        background-color: #161b22;
-        border: 1px solid #30363d;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-    }
-
-    #results img {
-        max-width: 100%; /* Ajusta el ancho al tamaño del contenedor */
-        height: auto;    /* Mantiene la proporción */
-        object-fit: contain; /* Asegura que la imagen se ajuste al contenedor sin recortes */
-        border-radius: 8px;  /* Esquinas redondeadas */
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para mejorar la estética */
     }
 </style>
 </head>
