@@ -44,6 +44,7 @@
 
         #results img {
             max-width: 100%;
+            max-height: 500px; /* Limita la altura máxima */
             height: auto;
             object-fit: contain;
             border-radius: 10px;
@@ -109,24 +110,10 @@
             0% {
                 transform: translateY(100vh);
             }
+
             100% {
                 transform: translateY(-100vh);
             }
-        }
-
-        .progress-container {
-            background-color: #303030;
-            height: 12px;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-
-        .progress {
-            background-color: #4caf50;
-            height: 100%;
-            width: 0%;
-            border-radius: 6px;
-            transition: width 0.2s;
         }
 
         .loading-spinner {
@@ -142,6 +129,7 @@
             0% {
                 transform: rotate(0deg);
             }
+
             100% {
                 transform: rotate(360deg);
             }
@@ -191,12 +179,6 @@
                         </form>
                         <div id="uploadMessage" class="text-green-500 mt-4 hidden">
                             Imagen subida correctamente.
-                        </div>
-                        <div id="progressSection" class="hidden mt-6">
-                            <h2 class="text-xl font-semibold mb-4 text-gray-300">Progreso del Análisis</h2>
-                            <div class="progress-container">
-                                <div id="progress" class="progress"></div>
-                            </div>
                         </div>
                         <div id="loading" class="hidden mt-6">
                             <div class="flex items-center justify-center">
@@ -248,8 +230,6 @@
 
                 var formData = new FormData(this);
                 $('#loading').removeClass('hidden');
-                $('#progressSection').removeClass('hidden');
-                $('#progress').css('width', '0%');
                 $('#uploadMessage').addClass('hidden');
 
                 $.ajax({
@@ -258,23 +238,12 @@
                     data: formData,
                     contentType: false,
                     processData: false,
-                    xhr: function () {
-                        var xhr = new window.XMLHttpRequest();
-                        xhr.upload.addEventListener("progress", function (evt) {
-                            if (evt.lengthComputable) {
-                                var percentComplete = (evt.loaded / evt.total) * 100;
-                                $('#progress').css('width', percentComplete + '%');
-                            }
-                        }, false);
-                        return xhr;
-                    },
                     success: function (response) {
                         $('#loading').addClass('hidden');
                         $('#detectionComplete').removeClass('hidden');
                         $('#results').removeClass('hidden');
                         $('#keypointImage').attr('src', 'data:image/png;base64,' + response.keypoint_image);
                         $('#resultImageSecondary').attr('src', 'data:image/png;base64,' + response.transformations_image);
-                        $('#progress').css('width', '100%');
 
                         if (response.emotion) {
                             $('#emotionLabel').text('Emoción Detectada: ' + response.emotion).removeClass('hidden');
