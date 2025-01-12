@@ -42,15 +42,15 @@
             transform: scale(1.03);
         }
 
-        #results img {
-        max-width: 100%;
-        max-height: 400px; /* Limita la altura máxima de la imagen */
-        height: auto;
-        object-fit: contain;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        #previewContainer img {
+            max-width: 100%; /* Limita el ancho al contenedor */
+            max-height: 200px; /* Limita la altura máxima */
+            height: auto; /* Mantiene la proporción de la imagen */
+            object-fit: contain; /* Ajusta la imagen dentro del contenedor */
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
-        
+
         .btn-custom {
             background-color: #2196f3;
             color: white;
@@ -73,68 +73,6 @@
             transform: scale(1);
         }
 
-        .bubble {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: bubbleAnimation 8s infinite;
-        }
-
-        .bubble:nth-child(1) {
-            left: 20%;
-            animation-duration: 10s;
-            animation-delay: 2s;
-        }
-
-        .bubble:nth-child(2) {
-            left: 60%;
-            animation-duration: 6s;
-            animation-delay: 3s;
-        }
-
-        .bubble:nth-child(3) {
-            left: 40%;
-            animation-duration: 12s;
-            animation-delay: 5s;
-        }
-
-        .bubble:nth-child(4) {
-            left: 80%;
-            animation-duration: 9s;
-            animation-delay: 4s;
-        }
-
-        @keyframes bubbleAnimation {
-            0% {
-                transform: translateY(100vh);
-            }
-
-            100% {
-                transform: translateY(-100vh);
-            }
-        }
-
-        .loading-spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid #2196f3;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
         .error {
             background-color: #e53935;
             color: white;
@@ -147,58 +85,54 @@
 </head>
 
 <body class="bg-custom min-h-screen">
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-
     <div class="container mx-auto px-4 py-8">
-        <div class="text-center mb-12">
+        <div class="text-center">
             <h1 class="text-6xl font-extrabold text-indigo-400 tracking-tight mb-2">EmotionAI</h1>
             <p class="text-lg font-light mb-6">¡Analiza emociones en tus imágenes de forma rápida y precisa!</p>
         </div>
 
-        <div class="max-w-4xl mx-auto">
-            <div class="card mb-12">
-                <h2 class="text-2xl font-semibold mb-6 text-gray-300">Sube tu imagen para analizar emociones</h2>
-                <form id="uploadForm" class="space-y-6">
-                    <div class="flex items-center justify-center w-full">
-                        <label class="flex flex-col items-center justify-center w-full h-48 border-4 border-dashed border-gray-500 cursor-pointer rounded-lg">
-                            <div class="text-center text-gray-400" id="previewContainer">
-                                <p>Arrastra o selecciona una imagen</p>
+        <div class="max-w-4xl mx-auto mt-12">
+            <div class="flex flex-col gap-8">
+                <div>
+                    <div class="card">
+                        <h2 class="text-2xl font-semibold mb-6 text-gray-300">Sube tu imagen para analizar emociones</h2>
+                        <form id="uploadForm" class="space-y-6">
+                            <div class="flex items-center justify-center w-full">
+                                <label class="flex flex-col items-center justify-center w-full h-48 border-4 border-dashed border-gray-500 cursor-pointer rounded-lg">
+                                    <div class="text-center text-gray-400" id="previewContainer">
+                                        <p>Arrastra o selecciona una imagen</p>
+                                    </div>
+                                    <input type="file" class="opacity-0 absolute" name="file" accept=".jpg,.jpeg,.png" id="fileInput" />
+                                </label>
                             </div>
-                            <input type="file" class="opacity-0 absolute" name="file" accept=".jpg,.jpeg,.png" id="fileInput" />
-                        </label>
-                    </div>
-                    <button type="submit" class="btn-custom w-full">
-                        Analizar Imagen
-                    </button>
-                </form>
-                <div id="uploadMessage" class="text-green-500 mt-4 hidden">
-                    Imagen subida correctamente.
-                </div>
-                <div id="loading" class="hidden mt-6">
-                    <div class="flex items-center justify-center">
-                        <div class="loading-spinner"></div>
+                            <button type="submit" class="btn-custom w-full">
+                                Analizar Imagen
+                            </button>
+                        </form>
+                        <div id="uploadMessage" class="text-green-500 mt-4 hidden">
+                            Imagen subida correctamente.
+                        </div>
+                        <div id="error" class="error hidden mt-6"></div>
                     </div>
                 </div>
-                <div id="error" class="error hidden mt-6"></div>
-            </div>
 
-            <div class="card">
-                <h2 class="text-2xl font-semibold mb-6 text-gray-300">Resultados de la Detección</h2>
-                <div id="detectionComplete" class="hidden text-green-500 font-bold">
-                    Detección Finalizada
-                </div>
-                <div id="results" class="hidden">
-                    <div class="border border-gray-600 rounded-lg p-6">
-                        <h4 class="font-semibold mb-4 text-gray-200">Resultados:</h4>
-                        <div class="relative">
-                            <img id="keypointImage" class="max-w-full h-auto mx-auto" src="" alt="Puntos clave del rostro">
-                            <img id="resultImageSecondary" class="max-w-full h-auto mx-auto mt-4" src="" alt="Transformaciones de la Imagen">
+                <div>
+                    <div class="card">
+                        <h2 class="text-2xl font-semibold mb-6 text-gray-300">Resultados de la Detección</h2>
+                        <div id="detectionComplete" class="hidden text-green-500 font-bold">
+                            Detección Finalizada
+                        </div>
+                        <div id="results" class="hidden">
+                            <div class="border border-gray-600 rounded-lg p-6">
+                                <h4 class="font-semibold mb-4 text-gray-200">Resultados:</h4>
+                                <div class="relative">
+                                    <img id="keypointImage" class="max-w-full h-auto mx-auto" src="" alt="Puntos clave del rostro">
+                                    <img id="resultImageSecondary" class="max-w-full h-auto mx-auto mt-4" src="" alt="Transformaciones de la Imagen">
+                                </div>
+                            </div>
+                            <div id="emotionLabel" class="text-lg font-bold text-center mt-4 text-gray-200 hidden"></div>
                         </div>
                     </div>
-                    <div id="emotionLabel" class="text-lg font-bold text-center mt-4 text-gray-200 hidden"></div>
                 </div>
             </div>
         </div>
@@ -211,7 +145,7 @@
                 if (file) {
                     var reader = new FileReader();
                     reader.onload = function (e) {
-                        $('#previewContainer').html('<img src="' + e.target.result + '" alt="Vista previa" class="max-w-full h-auto">');
+                        $('#previewContainer').html('<img src="' + e.target.result + '" alt="Vista previa">');
                         $('#uploadMessage').removeClass('hidden');
                     };
                     reader.readAsDataURL(file);
@@ -222,7 +156,6 @@
                 e.preventDefault();
 
                 var formData = new FormData(this);
-                $('#loading').removeClass('hidden');
                 $('#uploadMessage').addClass('hidden');
 
                 $.ajax({
@@ -232,7 +165,6 @@
                     contentType: false,
                     processData: false,
                     success: function (response) {
-                        $('#loading').addClass('hidden');
                         $('#detectionComplete').removeClass('hidden');
                         $('#results').removeClass('hidden');
                         $('#keypointImage').attr('src', 'data:image/png;base64,' + response.keypoint_image);
@@ -243,7 +175,6 @@
                         }
                     },
                     error: function (xhr) {
-                        $('#loading').addClass('hidden');
                         $('#error').removeClass('hidden').text(xhr.responseJSON?.error || 'Ocurrió un error');
                     }
                 });
