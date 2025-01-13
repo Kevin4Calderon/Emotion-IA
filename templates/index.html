@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EmotionAI</title>
+    <title>EmotionIA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
@@ -160,60 +160,62 @@
         </div>
 
         <div class="max-w-4xl mx-auto mt-12">
-    <!-- Contenedor principal reorganizado en vertical -->
-    <div class="flex flex-col space-y-8">
-        <!-- Panel izquierdo -->
-        <div class="w-full">
-            <div class="card">
-                <h2 class="text-2xl font-semibold mb-6 text-center">Carga tu imagen</h2>
-                <form id="uploadForm" class="space-y-6">
-                    <div class="flex items-center justify-center w-full">
-                        <label class="flex flex-col items-center justify-center w-full h-48 border-4 border-dashed border-gray-600 cursor-pointer">
-                            <div class="text-center text-gray-400" id="previewContainer">
-                                <p>Arrastra o selecciona una imagen</p>
+            <!-- Contenedor principal reorganizado en vertical -->
+            <div class="flex flex-col space-y-8">
+                <!-- Panel izquierdo -->
+                <div class="w-full">
+                    <div class="card">
+                        <h2 class="text-2xl font-semibold mb-6 text-center">Carga tu imagen</h2>
+                        <form id="uploadForm" class="space-y-6">
+                            <div class="flex items-center justify-center w-full">
+                                <label class="flex flex-col items-center justify-center w-full max-w-lg h-48 border-4 border-dashed border-gray-600 cursor-pointer relative">
+                                    <div class="text-center text-gray-400" id="previewContainer">
+                                        <p>Arrastra o selecciona una imagen</p>
+                                    </div>
+                                    <p><br></p>
+                                    <input type="file" class="opacity-0 absolute inset-0" name="file" accept=".jpg,.jpeg,.png" id="fileInput" />
+                                </label>
                             </div>
-                            <p><br></p>
-                            <input type="file" class="opacity-0 absolute" name="file" accept=".jpg,.jpeg,.png" id="fileInput" />
-                        </label>
+                            <button type="submit" class="btn-custom w-full max-w-lg px-4 py-2 mt-4 bg-blue-500 text-white rounded hover:bg-blue-600">
+                                Analizar imagen
+                            </button>
+                        </form>
+                        <div id="uploadMessage" class="text-green-500 mt-4 hidden text-center">
+                            Imagen subida correctamente.
+                        </div>
+                        
+                        <div id="loading" class="hidden mt-6">
+                            <div class="flex items-center justify-center">
+                                <div class="loading-spinner h-14 w-14"></div>
+                            </div>
+                        </div>
+                        <div id="error" class="hidden mt-6 p-4 bg-red-800 border border-red-600 text-red-200 rounded-lg text-center">
+                        </div>
                     </div>
-                    <button type="submit" class="btn-custom w-full">
-                        Analizar imagen
-                    </button>
-                </form>
-                <div id="uploadMessage" class="text-green-500 mt-4 hidden text-center">
-                    Imagen subida correctamente.
                 </div>
-                
-                <div id="loading" class="hidden mt-6">
-                    <div class="flex items-center justify-center">
-                        <div class="loading-spinner h-14 w-14"></div>
+
+                <!-- Panel derecho -->
+                <div class="w-full">
+                    <div class="card">
+                        <h2 class="text-2xl font-semibold mb-6 text-center">Resultados</h2>
+                        <div id="detectionComplete" class="hidden text-green-500 font-bold text-center">
+                            Detección Completa
+                        </div>
+                        <div id="results" class="hidden">
+                            <div class="border border-gray-600 rounded-lg p-6">
+                                <div class="relative">
+                                    <img id="keypointImage" class="max-w-full h-auto mx-auto" src="" alt="Puntos clave del rostro">
+                                    <img id="resultImageSecondary" class="max-w-full h-auto mx-auto mt-4" src="" alt="Transformaciones de la Imagen">
+                                </div>
+                            </div>
+                            <div id="emotionLabel" class="text-lg font-bold text-center mt-4 hidden"></div>
+                        </div>
                     </div>
-                </div>
-                <div id="error" class="hidden mt-6 p-4 bg-red-800 border border-red-600 text-red-200 rounded-lg text-center">
                 </div>
             </div>
         </div>
 
-        <!-- Panel derecho -->
-        <div class="w-full">
-            <div class="card">
-                <h2 class="text-2xl font-semibold mb-6 text-center">Resultados</h2>
-                <div id="detectionComplete" class="hidden text-green-500 font-bold text-center">
-                    Detección Completa
-                </div>
-                <div id="results" class="hidden">
-                    <div class="border border-gray-600 rounded-lg p-6">
-                        <div class="relative">
-                            <img id="keypointImage" class="max-w-full h-auto mx-auto" src="" alt="Puntos clave del rostro">
-                            <img id="resultImageSecondary" class="max-w-full h-auto mx-auto mt-4" src="" alt="Transformaciones de la Imagen">
-                        </div>
-                    </div>
-                    <div id="emotionLabel" class="text-lg font-bold text-center mt-4 hidden"></div>
-                </div>
-            </div>
-        </div>
     </div>
-</div>
 
     <script>
         $(document).ready(function () {
