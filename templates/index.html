@@ -167,21 +167,24 @@
             <div class="card">
                 <h2 class="text-2xl font-semibold mb-6 text-center">Carga tu imagen</h2>
                 <form id="uploadForm" class="space-y-6">
-                    <div class="flex items-center justify-center w-full">
-                        <label class="flex flex-col items-center justify-center w-full h-48 border-4 border-dashed border-gray-600 cursor-pointer">
-                            <div class="text-center text-gray-400" id="previewContainer">
-                                <p>Arrastra o selecciona una imagen</p>
-                            </div>
-                            <p><br></p>
-                            <input type="file" class="opacity-0 absolute" name="file" accept=".jpg,.jpeg,.png" id="fileInput" />
-                        </label>
-                    </div>
-                    <button type="submit" class="btn-custom w-full">
-                        Analizar imagen
-                    </button>
-                </form>
+        <div class="flex items-center justify-center w-full">
+        <label class="flex flex-col items-center justify-center w-full h-48 border-4 border-dashed border-gray-600 cursor-pointer">
+            <div class="text-center text-gray-400" id="previewContainer">
+                <p>Arrastra o selecciona una imagen</p>
+            </div>
+            <p><br></p>
+            <input type="file" class="opacity-0 absolute" name="file" accept=".jpg,.jpeg,.png" id="fileInput" />
+            </label>
+        </div>
+
+    <!-- Agregar margen superior al botón -->
+        <button type="submit" class="btn-custom w-full mt-6">
+            Analizar imagen
+        </button>
+            </form>
+
                 <div id="uploadMessage" class="text-green-500 mt-4 hidden text-center">
-                    Imagen subida correctamente.
+                    Imagen lista para analisis
                 </div>
                 
                 <div id="loading" class="hidden mt-6">
