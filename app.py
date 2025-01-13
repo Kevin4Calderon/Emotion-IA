@@ -103,7 +103,7 @@ def analyze_face(image_path):
 
         buf = BytesIO()
         plt.tight_layout()
-        plt.savefig(buf, format='png')
+        plt.savefig(buf, format='png', bbox_inches='tight', pad_inches=0)
         buf.seek(0)
         plt.close(fig)
         transformations_base64 = base64.b64encode(buf.getvalue()).decode('utf-8')
