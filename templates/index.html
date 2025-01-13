@@ -10,195 +10,175 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f9f7ff;
-            color: #2c2c54;
-            overflow-x: hidden;
+            background-color: #edf2f7;
+            color: #1a202c;
             margin: 0;
         }
 
-        .custom-header {
-            background-color: #6c63ff;
-            color: white;
-            padding: 20px 0;
+        .header {
+            background-color: #2b6cb0;
+            color: #fff;
+            padding: 20px;
             text-align: center;
         }
 
-        .custom-header h1 {
-            font-size: 2.5rem;
-            font-weight: bold;
+        .header h1 {
+            font-size: 2rem;
         }
 
-        .custom-header p {
-            font-size: 1.2rem;
-            margin-top: 5px;
-        }
-
-        .card {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 20px;
         }
 
-        .card h2 {
-            color: #6c63ff;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 20px;
+        .file-upload {
+            border: 2px dashed #2b6cb0;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: background-color 0.2s;
         }
 
-        .btn-primary {
-            background-color: #6c63ff;
+        .file-upload:hover {
+            background-color: #ebf8ff;
+        }
+
+        .file-upload input {
+            display: none;
+        }
+
+        .file-preview {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .file-preview img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            background-color: #2b6cb0;
             color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
+            padding: 10px 20px;
             border: none;
+            border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
-            transition: transform 0.3s ease, background-color 0.3s ease;
+            transition: background-color 0.2s;
         }
 
-        .btn-primary:hover {
-            background-color: #574b90;
-            transform: translateY(-2px);
+        .btn:hover {
+            background-color: #2c5282;
         }
 
-        .progress-container {
-            background-color: #f0f0f0;
-            border-radius: 5px;
+        .progress-bar {
+            background-color: #edf2f7;
+            border-radius: 10px;
             overflow: hidden;
+            margin-top: 20px;
         }
 
         .progress {
             height: 10px;
-            background-color: #6c63ff;
+            background-color: #2b6cb0;
             width: 0%;
-            transition: width 0.4s ease;
+            transition: width 0.4s;
         }
 
-        .loading-spinner {
-            border: 4px solid #f0f0f0;
-            border-top: 4px solid #6c63ff;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .file-input-container {
-            border: 2px dashed #ccc;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            transition: background-color 0.2s ease, border-color 0.2s ease;
-        }
-
-        .file-input-container:hover {
-            background-color: #f8f8f8;
-            border-color: #6c63ff;
-        }
-
-        .file-input-container p {
-            color: #777;
-        }
-
-        .results-container {
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
+        .error-message {
+            color: #e53e3e;
             margin-top: 20px;
+            text-align: center;
         }
 
-        .results-container img {
+        .result {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .result img {
             max-width: 100%;
             border-radius: 10px;
-        }
-
-        .emotion-label {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-top: 20px;
-            color: #6c63ff;
         }
     </style>
 </head>
 
 <body>
-    <header class="custom-header">
-        <h1>EmotionAI</h1>
-        <p>Descubre las emociones en tus imágenes con precisión</p>
+    <header class="header">
+        <h1>EmotionAI - Detector de Emociones</h1>
     </header>
 
-    <main class="container mx-auto px-4 py-10">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-            <!-- Subir imagen -->
-            <div class="card">
-                <h2>Sube una imagen</h2>
-                <form id="uploadForm">
-                    <div class="file-input-container">
-                        <p>Arrastra o selecciona una imagen</p>
-                        <input type="file" name="file" accept=".jpg,.jpeg,.png" id="fileInput" class="hidden">
-                    </div>
-                    <button type="submit" class="btn-primary mt-6 w-full">Analizar Emoción</button>
-                </form>
-                <div id="uploadMessage" class="text-green-500 mt-4 hidden">Imagen subida correctamente.</div>
-                <div id="progressSection" class="hidden mt-6">
-                    <div class="progress-container">
-                        <div id="progress" class="progress"></div>
-                    </div>
-                </div>
-                <div id="loading" class="hidden mt-6 flex justify-center">
-                    <div class="loading-spinner"></div>
-                </div>
-                <div id="error" class="hidden mt-6 bg-red-100 text-red-600 p-4 rounded">Ocurrió un error</div>
+    <div class="container">
+        <!-- Subir Imagen -->
+        <div id="uploadSection">
+            <h2 class="text-xl font-bold text-gray-700 mb-4">Sube una imagen para analizar</h2>
+            <div class="file-upload" id="fileUpload">
+                <p>Haz clic aquí o arrastra una imagen</p>
+                <input type="file" id="fileInput" accept="image/*">
+            </div>
+            <button class="btn mt-4 w-full" id="uploadButton">Analizar Emoción</button>
+
+            <div id="progressSection" class="progress-bar mt-4 hidden">
+                <div id="progress" class="progress"></div>
             </div>
 
-            <!-- Resultados -->
-            <div class="card">
-                <h2>Resultados</h2>
-                <div id="detectionComplete" class="hidden text-green-500 font-bold">Detección Completa</div>
-                <div id="results" class="hidden results-container">
-                    <h4 class="font-semibold mb-4">Resultados:</h4>
-                    <img id="keypointImage" src="" alt="Puntos clave del rostro">
-                    <img id="resultImageSecondary" class="mt-4" src="" alt="Transformaciones de la Imagen">
-                    <div id="emotionLabel" class="emotion-label hidden"></div>
-                </div>
+            <div id="errorMessage" class="error-message hidden"></div>
+
+            <div class="file-preview hidden" id="filePreview">
+                <h3 class="text-lg font-bold">Vista previa:</h3>
+                <img id="previewImage" src="" alt="Vista previa">
             </div>
         </div>
-    </main>
+
+        <!-- Resultados -->
+        <div id="resultsSection" class="hidden">
+            <h2 class="text-xl font-bold text-gray-700 mb-4">Resultados</h2>
+            <div class="result">
+                <h3 class="text-lg font-bold">Emoción detectada:</h3>
+                <p id="emotionLabel" class="text-lg text-blue-600 mt-2"></p>
+                <img id="resultImage" src="" alt="Resultado" class="mt-4">
+            </div>
+        </div>
+    </div>
 
     <script>
         $(document).ready(function () {
+            let selectedFile;
+
+            // Manejar la carga del archivo
             $('#fileInput').on('change', function (e) {
-                var file = e.target.files[0];
-                if (file) {
-                    var reader = new FileReader();
+                selectedFile = e.target.files[0];
+                if (selectedFile) {
+                    const reader = new FileReader();
                     reader.onload = function (e) {
-                        $('.file-input-container').html('<img src="' + e.target.result + '" alt="Vista previa" class="max-w-full h-auto mx-auto">');
-                        $('#uploadMessage').removeClass('hidden');
+                        $('#filePreview').removeClass('hidden');
+                        $('#previewImage').attr('src', e.target.result);
                     };
-                    reader.readAsDataURL(file);
+                    reader.readAsDataURL(selectedFile);
                 }
             });
 
-            $('#uploadForm').on('submit', function (e) {
-                e.preventDefault();
+            // Simular envío del formulario
+            $('#uploadButton').on('click', function () {
+                if (!selectedFile) {
+                    $('#errorMessage').text('Por favor, selecciona una imagen antes de continuar.').removeClass('hidden');
+                    return;
+                }
 
-                var formData = new FormData(this);
-                $('#loading').removeClass('hidden');
+                $('#errorMessage').addClass('hidden');
                 $('#progressSection').removeClass('hidden');
                 $('#progress').css('width', '0%');
-                $('#uploadMessage').addClass('hidden');
+
+                // Simulación de envío con Ajax
+                const formData = new FormData();
+                formData.append('file', selectedFile);
 
                 $.ajax({
                     url: '/analyze',
@@ -207,30 +187,25 @@
                     contentType: false,
                     processData: false,
                     xhr: function () {
-                        var xhr = new window.XMLHttpRequest();
-                        xhr.upload.addEventListener("progress", function (evt) {
+                        const xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener('progress', function (evt) {
                             if (evt.lengthComputable) {
-                                var percentComplete = (evt.loaded / evt.total) * 100;
+                                const percentComplete = (evt.loaded / evt.total) * 100;
                                 $('#progress').css('width', percentComplete + '%');
                             }
                         }, false);
                         return xhr;
                     },
                     success: function (response) {
-                        $('#loading').addClass('hidden');
-                        $('#detectionComplete').removeClass('hidden');
-                        $('#results').removeClass('hidden');
-                        $('#keypointImage').attr('src', 'data:image/png;base64,' + response.keypoint_image);
-                        $('#resultImageSecondary').attr('src', 'data:image/png;base64,' + response.transformations_image);
-                        $('#progress').css('width', '100%');
-
-                        if (response.emotion) {
-                            $('#emotionLabel').text('Emoción Detectada: ' + response.emotion).removeClass('hidden');
-                        }
+                        $('#resultsSection').removeClass('hidden');
+                        $('#emotionLabel').text(response.emotion);
+                        $('#resultImage').attr('src', 'data:image/png;base64,' + response.result_image);
                     },
-                    error: function (xhr) {
-                        $('#loading').addClass('hidden');
-                        $('#error').removeClass('hidden').text(xhr.responseJSON?.error || 'Ocurrió un error');
+                    error: function () {
+                        $('#errorMessage').text('Ocurrió un error al procesar la imagen.').removeClass('hidden');
+                    },
+                    complete: function () {
+                        $('#progressSection').addClass('hidden');
                     }
                 });
             });
