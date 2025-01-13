@@ -90,7 +90,7 @@ def analyze_face(image_path):
         # Transformaciones visuales
         transformations = [
             ("Original", gray_image),
-            ("Volteado horizontal", cv2.flip(gray_image, 1)),
+            ("Horizontal", cv2.flip(gray_image, 1)),
             ("Brillo aumentado", cv2.convertScaleAbs(gray_image, alpha=1.2, beta=50)),
             ("Invertido vertical", cv2.flip(gray_image, 0))
         ]
@@ -103,7 +103,7 @@ def analyze_face(image_path):
 
         buf = BytesIO()
         plt.tight_layout()
-        plt.savefig(buf, format='png', bbox_inches='tight')
+        plt.savefig(buf, format='png')
         buf.seek(0)
         plt.close(fig)
         transformations_base64 = base64.b64encode(buf.getvalue()).decode('utf-8')
